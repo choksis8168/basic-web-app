@@ -43,5 +43,27 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (query.toLowerCase().includes("which of the following numbers is both a square and a cube:")) {
+    // Extract numbers from the query
+    const numbersRegex = /\d+/g;
+    const numbers = query.match(numbersRegex);
+
+    if (numbers && numbers.length > 0) {
+      // Check each number
+      for (const numberStr of numbers) {
+        const number = parseInt(numberStr);
+        
+        // Check if the number is both a square and a cube
+        if (Math.sqrt(number) % 1 === 0 && Math.cbrt(number) % 1 === 0) {
+          return number.toString();
+        }
+      }
+
+      return "";
+    } else {
+      return "";
+    }
+  }
+
   return "";
 }
