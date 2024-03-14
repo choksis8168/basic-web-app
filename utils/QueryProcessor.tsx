@@ -30,16 +30,12 @@ export default function QueryProcessor(query: string): string {
     const numbersRegex = /\d+/g;
     const numbers = query.match(numbersRegex);
 
-    if (numbers && numbers.length >= 2) {
-      // Extract x and y
-      const x = parseInt(numbers[0]);
-      const y = parseInt(numbers[1]);
-      
-      // Perform addition
-      const result = x + y;
-      return result.toString();
+    if (numbers && numbers.length > 0) {
+      // Calculate the sum of all numbers
+      const sum = numbers.reduce((acc, num) => acc + parseInt(num), 0);
+      return sum.toString();
     } else {
-      return "";
+      return "No numbers found in the query.";
     }
   }
 
