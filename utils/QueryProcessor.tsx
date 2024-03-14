@@ -94,8 +94,8 @@ export default function QueryProcessor(query: string): string {
       const x = parseInt(numbers[0]);
       const y = parseInt(numbers[1]);
       
-      // Compute x to the power of y
-      const result = Math.pow(x, y);
+      // Perform exponentiation
+      const result = customPow(x, y);
       return result.toString();
     } else {
       return "Insufficient numbers provided in the query.";
@@ -127,7 +127,7 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
-  if (queryLower.includes("what is") && queryLower.includes("minus")) {
+  if (query.toLowerCase().includes("what is") && query.toLowerCase().includes("minus")) {
     // Extract numbers from the query
     const numbersRegex = /\d+/g;
     const numbers = query.match(numbersRegex);
@@ -167,4 +167,16 @@ function isPrime(num: number): boolean {
     i += 6;
   }
   return true;
+}
+
+function customPow(base: number, exponent: number): number {
+  let result = 1;
+  while (exponent > 0) {
+    if (exponent % 2 === 1) {
+      result *= base;
+    }
+    base *= base;
+    exponent = Math.floor(exponent / 2);
+  }
+  return result;
 }
