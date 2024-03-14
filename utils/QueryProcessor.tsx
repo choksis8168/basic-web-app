@@ -47,6 +47,7 @@ export default function QueryProcessor(query: string): string {
     // Extract numbers from the query
     const numbersRegex = /\d+/g;
     const numbers = query.match(numbersRegex);
+    const resultNumbers: number[] = [];
 
     if (numbers && numbers.length > 0) {
       // Check each number
@@ -55,13 +56,17 @@ export default function QueryProcessor(query: string): string {
         
         // Check if the number is both a square and a cube
         if (Math.sqrt(number) % 1 === 0 && Math.cbrt(number) % 1 === 0) {
-          return number.toString();
+          resultNumbers.push(number);
         }
       }
 
-      return "";
+      if (resultNumbers.length > 0) {
+        return resultNumbers.join(", ");
+      } else {
+        return "No numbers found that are both a square and a cube.";
+      }
     } else {
-      return "";
+      return "No numbers found in the query.";
     }
   }
 
@@ -80,6 +85,24 @@ export default function QueryProcessor(query: string): string {
       return result.toString();
     } else {
       return "";
+    }
+  }
+
+  if (query.toLowerCase().includes("what is") && query.toLowerCase().includes("to the power of")) {
+    // Extract numbers from the query
+    const numbersRegex = /\d+/g;
+    const numbers = query.match(numbersRegex);
+
+    if (numbers && numbers.length >= 2) {
+      // Extract x and y
+      const x = parseInt(numbers[0]);
+      const y = parseInt(numbers[1]);
+      
+      // Compute x to the power of y
+      const result = Math.pow(x, y);
+      return result.toString();
+    } else {
+      return "Insufficient numbers provided in the query.";
     }
   }
 
