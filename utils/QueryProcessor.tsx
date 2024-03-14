@@ -102,5 +102,51 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (query.toLowerCase().includes("which of the following numbers are primes:")) {
+    // Extract numbers from the query
+    const numbersRegex = /\d+/g;
+    const numbers = query.match(numbersRegex);
+    const primes: number[] = [];
+
+    if (numbers && numbers.length > 0) {
+      // Check each number for primality
+      for (const numberStr of numbers) {
+        const number = parseInt(numberStr);
+        if (isPrime(number)) {
+          primes.push(number);
+        }
+      }
+
+      if (primes.length > 0) {
+        return primes.join(", ");
+      } else {
+        return "No prime numbers found.";
+      }
+    } else {
+      return "No numbers found in the query.";
+    }
+  }
+
+
   return "";
+}
+
+function isPrime(num: number): boolean {
+  if (num <= 1) {
+    return false;
+  }
+  if (num <= 3) {
+    return true;
+  }
+  if (num % 2 === 0 || num % 3 === 0) {
+    return false;
+  }
+  let i = 5;
+  while (i * i <= num) {
+    if (num % i === 0 || num % (i + 2) === 0) {
+      return false;
+    }
+    i += 6;
+  }
+  return true;
 }
