@@ -65,5 +65,23 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (query.toLowerCase().includes("what is") && query.toLowerCase().includes("multiplied by")) {
+    // Extract numbers from the query
+    const numbersRegex = /\d+/g;
+    const numbers = query.match(numbersRegex);
+
+    if (numbers && numbers.length >= 2) {
+      // Extract x and y
+      const x = parseInt(numbers[0]);
+      const y = parseInt(numbers[1]);
+      
+      // Perform multiplication
+      const result = x * y;
+      return result.toString();
+    } else {
+      return "";
+    }
+  }
+
   return "";
 }
