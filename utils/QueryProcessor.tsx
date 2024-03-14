@@ -127,6 +127,24 @@ export default function QueryProcessor(query: string): string {
     }
   }
 
+  if (queryLower.includes("what is") && queryLower.includes("minus")) {
+    // Extract numbers from the query
+    const numbersRegex = /\d+/g;
+    const numbers = query.match(numbersRegex);
+
+    if (numbers && numbers.length >= 2) {
+      // Extract x and y
+      const x = parseInt(numbers[0]);
+      const y = parseInt(numbers[1]);
+      
+      // Perform subtraction
+      const result = x - y;
+      return result.toString();
+    } else {
+      return "Insufficient numbers provided in the query.";
+    }
+  }
+
 
   return "";
 }
